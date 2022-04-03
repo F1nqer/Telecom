@@ -1,4 +1,8 @@
-﻿using System;
+﻿using Application.ViewModels;
+using Data;
+using Data.Contexts;
+using Domain.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,14 +12,21 @@ namespace Application.Services
 {
     public class AltelProviderService : IProviderService
     {
-        public string AddBalance(string number, decimal balance)
+        UoW db;
+        public AltelProviderService(TelecomDbContext dbContext)
         {
-            throw new NotImplementedException();
+            db = new UoW(dbContext);
         }
 
-        public string DetermineProvider(string number)
+        public string AddBalance(Payment payment)
         {
-            throw new NotImplementedException();
+            Bill bill = new Bill();
+            bill.Sum = payment.Sum;
+            bill.Number = payment.Number;
+            bill.ProviderId = db.Providers.GetByName("Altel").Id;
+            bill.Provider = db.Providers.GetByName("Altel");
+            db.Bills.Create(bill);
+            return "Bill with Altel Provider is created";
         }
     }
 }

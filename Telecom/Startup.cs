@@ -1,8 +1,10 @@
 using Application.Services;
+using Data.Contexts;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -28,11 +30,14 @@ namespace Telecom
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            string connection = Configuration.GetConnectionString("DefaultConnection");
+            services.AddDbContext<TelecomDbContext>(options => options.UseSqlServer(connection));
             services.AddScoped<IProviderService, ActivProviderService>("Activ");
             services.AddScoped<IProviderService, Tele2ProviderService>("Tele2");
             services.AddScoped<IProviderService, BeelineProviderService>("Beeline");
             services.AddScoped<IProviderService, AltelProviderService>("Altel");
+            services.AddControllers();
+            services.AddTransient<NumberService>();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Telecom", Version = "v1" });

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Application.ViewModels
@@ -16,7 +17,10 @@ namespace Application.ViewModels
             }
             set 
             {
-                Number = value.Replace(" ", "").Length < 12 ? Number : throw new Exception("Некорректный номер"); 
+                Number = value
+                    .Replace(" ", "")
+                    .Replace("-", "")
+                    .Length == 12 ? Number : throw new Exception("Некорректный номер");
             } 
         }
         public decimal Sum { get; set; }

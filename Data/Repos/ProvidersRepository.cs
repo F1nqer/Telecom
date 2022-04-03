@@ -27,6 +27,12 @@ namespace Data.Repos
                 .Include(p => p.ProviderPrefixes)
                 .FirstOrDefault(p => p.Id == id);
         }
+        public Provider GetByName(string name)
+        {
+            return dbContext.Providers
+                .Include(p => p.ProviderPrefixes)
+                .FirstOrDefault(p => p.Name == name);
+        }
         public void Create(Provider item)
         {
             dbContext.Providers

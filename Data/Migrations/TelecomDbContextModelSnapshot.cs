@@ -63,6 +63,9 @@ namespace Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("Prefix")
+                        .HasColumnType("int");
+
                     b.Property<int>("ProviderId")
                         .HasColumnType("int");
 

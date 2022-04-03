@@ -46,6 +46,7 @@ namespace Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    Prefix = table.Column<int>(type: "int", nullable: false),
                     ProviderId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
