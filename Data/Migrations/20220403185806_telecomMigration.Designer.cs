@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(TelecomDbContext))]
-    [Migration("20220403172801_telecomMigration")]
+    [Migration("20220403185806_telecomMigration")]
     partial class telecomMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

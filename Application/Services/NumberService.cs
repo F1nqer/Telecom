@@ -4,8 +4,6 @@ using Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Services
 {
@@ -19,12 +17,12 @@ namespace Application.Services
 
         public string DetermineProviderName(string number)
         {
-            int prefix = Convert.ToInt32(number.Substring(2,3));
-            List<Provider> providersWithPrefixes = db.Providers.GetAll().ToList();
+            int prefix = Convert.ToInt32(number.Substring(2, 4));
+            List<ProviderPrefix> providersWithPrefixes = db.ProviderPrefixes.GetAll().ToList();
             string providerName = providersWithPrefixes
-                .FirstOrDefault(p => p.ProviderPrefixes
-                                    .Where(pp => pp.Prefix == prefix)
-                                    .First().Prefix == prefix)
+                .Where(p => p.Prefix == prefix)
+                .FirstOrDefault()
+                .Provider
                 .Name;
             return providerName;
         }

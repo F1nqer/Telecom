@@ -1,46 +1,43 @@
 ﻿using Data.Contexts;
 using Domain.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Data.Repos
 {
-    public class ProvidersRepository : IRepository<Provider>
+    public class ProviderPrefixesRepository : IRepository<ProviderPrefix>
     {
         private TelecomDbContext dbContext;
-        public ProvidersRepository(TelecomDbContext context)
+        public ProviderPrefixesRepository(TelecomDbContext context)
         {
             dbContext = context;
         }
-        public IQueryable<Provider> GetAll()
+        public IQueryable<ProviderPrefix> GetAll()
         {
-            return dbContext.Providers
-                .Include(p => p.ProviderPrefixes);
+            return dbContext.ProvidersPrefix
+                .Include(p => p.Provider);
         }
-        public Provider GetById(int id)
+        public ProviderPrefix GetById(int id)
         {
-            return dbContext.Providers
-                .Include(p => p.ProviderPrefixes)
+            return dbContext.ProvidersPrefix
+                .Include(p => p.Provider)
                 .FirstOrDefault(p => p.Id == id);
         }
-        public Provider GetByName(string name)
+        public ProviderPrefix GetPrefixByName(string name)
         {
-            return dbContext.Providers
-                .Include(p => p.ProviderPrefixes)
-                .FirstOrDefault(p => p.Name == name);
+            return dbContext.ProvidersPrefix
+                .Include(p => p.Provider)
+                .Where(p => p.Provider.Name == name)
+                .FirstOrDefault();
         }
-        public void Create(Provider item)
+        public void Create(ProviderPrefix item)
         {
-            dbContext.Providers
+            dbContext.ProvidersPrefix
                 .Add(item);
         }
-        public void Update(Provider item)
+        public void Update(ProviderPrefix item)
         {
-            dbContext.Providers
+            dbContext.ProvidersPrefix
                 .Update(item);
         }
         public void DeleteById(int id)

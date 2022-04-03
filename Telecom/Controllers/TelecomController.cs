@@ -3,6 +3,7 @@ using Application.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Threading.Tasks;
 using Telecom.Extensions;
 
 namespace Telecom.Controllers
@@ -20,7 +21,7 @@ namespace Telecom.Controllers
             this._numberService = numberService;
         }
         [HttpPost]
-        public ActionResult Payment(Payment payment)
+        public async Task<ActionResult> Payment(Payment payment)
         {
             var service = serviceProvider
                 .GetService<IProviderService>

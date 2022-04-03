@@ -2,18 +2,11 @@ using Application.Services;
 using Data.Contexts;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Telecom.Extensions;
 
 namespace Telecom
@@ -32,12 +25,12 @@ namespace Telecom
         {
             string connection = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<TelecomDbContext>(options => options.UseSqlServer(connection));
+            services.AddScoped<NumberService>();
             services.AddScoped<IProviderService, ActivProviderService>("Activ");
             services.AddScoped<IProviderService, Tele2ProviderService>("Tele2");
             services.AddScoped<IProviderService, BeelineProviderService>("Beeline");
             services.AddScoped<IProviderService, AltelProviderService>("Altel");
             services.AddControllers();
-            services.AddTransient<NumberService>();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Telecom", Version = "v1" });

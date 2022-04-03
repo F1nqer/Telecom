@@ -1,10 +1,6 @@
 ﻿using Data.Contexts;
 using Data.Repos;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Data
 {
@@ -12,7 +8,7 @@ namespace Data
     {
         private TelecomDbContext db;
         private BillsRepository BillRepository;
-        private ProvidersRepository ProviderRepository;
+        private ProviderPrefixesRepository ProviderRepository;
 
         public BillsRepository Bills
         {
@@ -24,12 +20,12 @@ namespace Data
             }
         }
 
-        public ProvidersRepository Providers
+        public ProviderPrefixesRepository ProviderPrefixes
         {
             get
             {
                 if (ProviderRepository == null)
-                    ProviderRepository = new ProvidersRepository(db);
+                    ProviderRepository = new ProviderPrefixesRepository(db);
                 return ProviderRepository;
             }
         }

@@ -69,6 +69,19 @@ namespace Data.Migrations
                 name: "IX_ProvidersPrefix_ProviderId",
                 table: "ProvidersPrefix",
                 column: "ProviderId");
+            migrationBuilder.Sql(@"INSERT INTO [Telecom]..Providers
+	                                VALUES (N'Altel'),
+		                                    (N'Tele2'),
+		                                    (N'Activ'),
+                                            (N'Beeline')");
+            migrationBuilder.Sql(@"INSERT INTO [Telecom]..ProvidersPrefix
+	                                VALUES ('700', 1),
+		                                    ('708', 1),
+		                                    ('707', 2),
+                                            ('747', 2),
+                                            ('701', 3),
+                                            ('777', 4),
+                                            ('705', 4)");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

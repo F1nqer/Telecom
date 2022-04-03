@@ -2,11 +2,6 @@
 using Data;
 using Data.Contexts;
 using Domain.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Services
 {
@@ -22,9 +17,10 @@ namespace Application.Services
             Bill bill = new Bill();
             bill.Sum = payment.Sum;
             bill.Number = payment.Number;
-            bill.ProviderId = db.Providers.GetByName("Activ").Id;
-            bill.Provider = db.Providers.GetByName("Activ");
+            bill.ProviderId = db.ProviderPrefixes.GetPrefixByName("Activ").Provider.Id;
+            bill.Provider = db.ProviderPrefixes.GetPrefixByName("Activ").Provider;
             db.Bills.Create(bill);
+            db.Save();
             return "Bill with Activ Provider is created";
         }
     }
