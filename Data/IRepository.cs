@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace Data
 {
-    public interface IRepository <T> : IDisposable where T : class
+    public interface IRepository <T> where T : class
     {
-        IEnumerable<T> GetAll(); 
-        T GetById(int id); 
-        void Create(T item);
-        void Update(T item);
-        void DeleteById(int id);
-        void Save();  
+        public IQueryable<T> GetAll(); 
+        public T GetById(int id); 
+        public void Create(T item);
+        public void Update(T item);
+        public void DeleteById(int id);
+        public void Save();  
     }
 }

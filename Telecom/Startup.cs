@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Telecom.Extensions;
 
 namespace Telecom
 {
@@ -28,7 +29,10 @@ namespace Telecom
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddScoped<IProviderService>();
+            services.AddScoped<IProviderService, ActivProviderService>("Activ");
+            services.AddScoped<IProviderService, Tele2ProviderService>("Tele2");
+            services.AddScoped<IProviderService, BeelineProviderService>("Beeline");
+            services.AddScoped<IProviderService, AltelProviderService>("Altel");
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Telecom", Version = "v1" });

@@ -8,8 +8,6 @@ namespace Application.Services
 {
     public interface IProviderService
     {
-        public string GetProviderName(string number);
-        public bool AddBalance(string number, decimal balance);
-        public bool RemoveBalance(string number, decimal balance);
+        public string AddBalance(string number, decimal balance);
     }
-},
+}
