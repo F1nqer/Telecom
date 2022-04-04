@@ -1,7 +1,11 @@
-﻿using Application.Services;
+﻿using Application.Localization;
+using Application.Services;
 using Application.ViewModels;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Localization;
 using System;
 using System.Threading.Tasks;
 using Telecom.Extensions;
@@ -13,25 +17,47 @@ namespace Telecom.Controllers
     public class TelecomController : ControllerBase
     {
         private readonly IServiceProvider serviceProvider;
-        private NumberService _numberService;
+        private NumberService numberService;
+        private readonly IStringLocalizer<SharedResource> sharedResourceLocalizer;
         public TelecomController
-            (IServiceProvider serviceProvider, NumberService numberService)
+            (IServiceProvider serviceProvider, NumberService numberService,
+            IStringLocalizer<SharedResource> sharedResourceLocalizer)
         {
             this.serviceProvider = serviceProvider;
-            this._numberService = numberService;
+            this.numberService = numberService;
+            this.sharedResourceLocalizer = sharedResourceLocalizer;
         }
         [HttpPost]
         public async Task<ActionResult> Payment(Payment payment)
         {
-            if (payment == null)
-            {
-                return BadRequest("Null!");
-            }
+            if (payment.Number == "" || payment.Sum < 0)
+                return BadRequest(sharedResourceLocalizer["NullError"].Value);
+
             var service = serviceProvider
                 .GetService<IProviderService>
-                (_numberService.DetermineProviderName(payment.GetNumber()));
+                (numberService.DetermineProviderName(payment.GetNumber(sharedResourceLocalizer)));
             string response = await service.AddBalanceAsync(payment);
             return Ok(response);
+        }
+
+        [HttpPost]
+        public IActionResult SetLanguage(string culture)
+        {
+            if (culture == "")
+                return BadRequest(sharedResourceLocalizer["NullError"].Value);
+
+            try {
+                Response.Cookies.Append(
+                CookieRequestCultureProvider.DefaultCookieName,
+                CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture)),
+                new CookieOptions {Expires = DateTimeOffset.UtcNow.AddYears(1)});
+                return Ok();
+            }
+
+            catch(Exception e)
+            {
+                throw new Exception(e.Message);
+            }
         }
     }
 }

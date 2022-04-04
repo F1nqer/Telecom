@@ -1,7 +1,9 @@
-﻿using Application.ViewModels;
+﻿using Application.Localization;
+using Application.ViewModels;
 using Data;
 using Data.Contexts;
 using Domain.Models;
+using Microsoft.Extensions.Localization;
 using System.Threading.Tasks;
 
 namespace Application.Services
@@ -9,9 +11,12 @@ namespace Application.Services
     public class ActivProviderService : IProviderService
     {
         UoW db;
-        public ActivProviderService(TelecomDbContext dbContext)
+        private readonly IStringLocalizer<SharedResource> sharedResourceLocalizer;
+
+        public ActivProviderService(TelecomDbContext dbContext, IStringLocalizer<SharedResource> sharedResourceLocalizer)
         {
             db = new UoW(dbContext);
+            this.sharedResourceLocalizer = sharedResourceLocalizer;
         }
         public string AddBalance(Payment payment)
         {
@@ -39,7 +44,7 @@ namespace Application.Services
             db.Bills.CreateAsync(bill);
             db.Save();
 
-            return $"Bill with {providerName} Provider is created";
+            return sharedResourceLocalizer["Ok"] + $" Bill with {providerName} Provider is created";
         }
     }
 }
