@@ -17,13 +17,20 @@ namespace Application.Services
 
         public string DetermineProviderName(string number)
         {
-            int prefix = Convert.ToInt32(number.Substring(2, 4));
-            string providerName = db.ProviderPrefixes
-                .GetAll()
-                .FirstOrDefault(p => p.Prefix == prefix)
-                .Provider
-                .Name;
-            return providerName;
+            int prefix = Convert.ToInt32(number.Substring(2, 3));
+            try
+            {
+                string providerName = db.ProviderPrefixes
+                    .GetAll()
+                    .FirstOrDefault(p => p.Prefix == prefix)
+                    .Provider
+                    .Name;
+                return providerName;
+            }
+            catch(NullReferenceException ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
     }
 }

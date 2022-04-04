@@ -23,9 +23,13 @@ namespace Telecom.Controllers
         [HttpPost]
         public async Task<ActionResult> Payment(Payment payment)
         {
+            if (payment == null)
+            {
+                return BadRequest("Null!");
+            }
             var service = serviceProvider
                 .GetService<IProviderService>
-                (_numberService.DetermineProviderName(payment.Number));
+                (_numberService.DetermineProviderName(payment.GetNumber()));
             string response = await service.AddBalanceAsync(payment);
             return Ok(response);
         }
