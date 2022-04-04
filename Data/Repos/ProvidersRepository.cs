@@ -2,6 +2,7 @@
 using Domain.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Data.Repos
 {
@@ -29,6 +30,13 @@ namespace Data.Repos
                 .Include(p => p.Provider)
                 .Where(p => p.Provider.Name == name)
                 .FirstOrDefault();
+        }
+
+        public async Task<ProviderPrefix> GetPrefixByNameAsync(string name)
+        {
+            return await dbContext.ProvidersPrefix
+                .Include(p => p.Provider)
+                .FirstOrDefaultAsync(p => p.Provider.Name == name);
         }
         public void Create(ProviderPrefix item)
         {

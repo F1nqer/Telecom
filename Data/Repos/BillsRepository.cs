@@ -28,6 +28,11 @@ namespace Data.Repos
             dbContext.Bills
                 .Add(item);
         }
+        public async void CreateAsync(Bill item)
+        {
+            await dbContext.Bills
+                .AddAsync(item);
+        }
         public void Update(Bill item)
         {
             dbContext.Bills

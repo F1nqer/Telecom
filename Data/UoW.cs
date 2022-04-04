@@ -34,6 +34,10 @@ namespace Data
         {
             db.SaveChanges();
         }
+        public async void SaveAsync()
+        {
+            await db.SaveChangesAsync();
+        }
 
         private bool disposed = false;
 

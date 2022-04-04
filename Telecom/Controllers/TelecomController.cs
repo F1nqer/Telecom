@@ -26,7 +26,7 @@ namespace Telecom.Controllers
             var service = serviceProvider
                 .GetService<IProviderService>
                 (_numberService.DetermineProviderName(payment.Number));
-            string response = service.AddBalance(payment);
+            string response = await service.AddBalanceAsync(payment);
             return Ok(response);
         }
     }

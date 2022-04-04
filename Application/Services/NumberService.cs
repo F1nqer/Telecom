@@ -18,10 +18,9 @@ namespace Application.Services
         public string DetermineProviderName(string number)
         {
             int prefix = Convert.ToInt32(number.Substring(2, 4));
-            List<ProviderPrefix> providersWithPrefixes = db.ProviderPrefixes.GetAll().ToList();
-            string providerName = providersWithPrefixes
-                .Where(p => p.Prefix == prefix)
-                .FirstOrDefault()
+            string providerName = db.ProviderPrefixes
+                .GetAll()
+                .FirstOrDefault(p => p.Prefix == prefix)
                 .Provider
                 .Name;
             return providerName;
