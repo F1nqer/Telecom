@@ -12,7 +12,7 @@ namespace Telecom
         {
             Log.Logger = new LoggerConfiguration()
             .MinimumLevel.Information()
-            .WriteTo.File(new RenderedCompactJsonFormatter(), "logs.json")
+            .WriteTo.File(new RenderedCompactJsonFormatter(), "Logs/logs.json")
             .CreateLogger();
 
             try
