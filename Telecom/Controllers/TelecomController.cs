@@ -34,11 +34,6 @@ namespace Telecom.Controllers
         [HttpPost]
         public async Task<ActionResult> Payment(Payment payment, string culture)
         {
-            if (payment.Number == "" || payment.Sum < 0)
-            {
-                logger.LogError(sharedResourceLocalizer["NullError"].Value);
-                return BadRequest(sharedResourceLocalizer["NullError"].Value);
-            }
             payment.Number = numberService.ValidateNumber(payment.Number);
             var service = serviceProvider
                 .GetService<IProviderService>
@@ -52,7 +47,7 @@ namespace Telecom.Controllers
         {
             if (culture == "")
             {
-                logger.LogError(sharedResourceLocalizer["NullError"].Value);
+                logger.LogError(sharedResourceLocalizer["NullError"].Value + " in SetLanguage");
                 return BadRequest(sharedResourceLocalizer["NullError"].Value);
             }
 

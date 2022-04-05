@@ -50,7 +50,7 @@ namespace Application.Services
                     .Replace(" ", "").Replace("-", "").Replace("(", "").Replace(")", "");
             Exception incorrectNumberEx = new Exception(sharedResourceLocalizer["IncorrectNumber"].Value);
             logger.LogError(incorrectNumberEx.Message);
-            Number = Number.Length == 12 ? Number : throw incorrectNumberEx;
+            Number = Number.Length == 12 && Number[0] == '+' ? Number : throw incorrectNumberEx;
             return Number;
         }
     }
