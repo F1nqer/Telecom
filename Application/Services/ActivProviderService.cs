@@ -4,6 +4,7 @@ using Data;
 using Data.Contexts;
 using Domain.Models;
 using Microsoft.Extensions.Localization;
+using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 
 namespace Application.Services
@@ -12,11 +13,15 @@ namespace Application.Services
     {
         UoW db;
         private readonly IStringLocalizer<SharedResource> sharedResourceLocalizer;
+        private readonly ILogger<ActivProviderService> logger;
 
-        public ActivProviderService(TelecomDbContext dbContext, IStringLocalizer<SharedResource> sharedResourceLocalizer)
+        public ActivProviderService(TelecomDbContext dbContext, 
+            IStringLocalizer<SharedResource> sharedResourceLocalizer,
+            ILogger<ActivProviderService> logger)
         {
             db = new UoW(dbContext);
             this.sharedResourceLocalizer = sharedResourceLocalizer;
+            this.logger = logger;
         }
         public string AddBalance(Payment payment)
         {
@@ -43,8 +48,9 @@ namespace Application.Services
             };
             db.Bills.CreateAsync(bill);
             db.Save();
-
-            return sharedResourceLocalizer["Ok"] + $" Bill with {providerName} Provider is created";
+            string message = sharedResourceLocalizer["Ok"] + $" Bill with {providerName} Provider is created";
+            logger.LogInformation(message);
+            return message;
         }
     }
 }
