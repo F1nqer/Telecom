@@ -11,7 +11,7 @@ namespace Application.Services
 {
     public class AltelProviderService : IProviderService
     {
-        UoW db;
+        private UoW db;
         private readonly IStringLocalizer<SharedResource> sharedResourceLocalizer;
         private readonly ILogger<AltelProviderService> logger;
 
@@ -23,6 +23,7 @@ namespace Application.Services
             this.sharedResourceLocalizer = sharedResourceLocalizer;
             this.logger = logger;
         }
+
         public string AddBalance(Payment payment)
         {
             var provider = db.ProviderPrefixes.GetPrefixByName("Altel").Provider;
@@ -37,6 +38,7 @@ namespace Application.Services
             db.Save();
             return "Bill with Altel Provider is created";
         }
+
         public async Task<string> AddBalanceAsync(Payment payment)
         {
             var providerName = "Altel";

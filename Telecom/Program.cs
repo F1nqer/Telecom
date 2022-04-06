@@ -37,9 +37,5 @@ namespace Telecom
                 {
                     webBuilder.UseStartup<Startup>();
                 });
-
     }
-
 }
-
-

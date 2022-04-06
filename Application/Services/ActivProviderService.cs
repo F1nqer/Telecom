@@ -11,7 +11,7 @@ namespace Application.Services
 {
     public class ActivProviderService : IProviderService
     {
-        UoW db;
+        private UoW db;
         private readonly IStringLocalizer<SharedResource> sharedResourceLocalizer;
         private readonly ILogger<ActivProviderService> logger;
 
@@ -23,6 +23,7 @@ namespace Application.Services
             this.sharedResourceLocalizer = sharedResourceLocalizer;
             this.logger = logger;
         }
+
         public string AddBalance(Payment payment)
         {
             var provider = db.ProviderPrefixes.GetPrefixByName("Activ").Provider;
@@ -37,6 +38,7 @@ namespace Application.Services
             db.Save();
             return "Bill with Activ Provider is created";
         }
+
         public async Task<string> AddBalanceAsync(Payment payment)
         {
             var providerName = "Activ";

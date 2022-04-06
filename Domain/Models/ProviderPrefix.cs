@@ -6,6 +6,5 @@
         public int Prefix { get; set; }
         public int ProviderId { get; set; }
         public Provider Provider { get; set; }
-
     }
 }

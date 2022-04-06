@@ -9,21 +9,25 @@ namespace Data.Repos
     public class ProviderPrefixesRepository : IRepository<ProviderPrefix>
     {
         private TelecomDbContext dbContext;
+
         public ProviderPrefixesRepository(TelecomDbContext context)
         {
             dbContext = context;
         }
+
         public IQueryable<ProviderPrefix> GetAll()
         {
             return dbContext.ProvidersPrefix
                 .Include(p => p.Provider);
         }
+
         public ProviderPrefix GetById(int id)
         {
             return dbContext.ProvidersPrefix
                 .Include(p => p.Provider)
                 .FirstOrDefault(p => p.Id == id);
         }
+
         public ProviderPrefix GetPrefixByName(string name)
         {
             return dbContext.ProvidersPrefix
@@ -38,16 +42,19 @@ namespace Data.Repos
                 .Include(p => p.Provider)
                 .FirstOrDefaultAsync(p => p.Provider.Name == name);
         }
+
         public void Create(ProviderPrefix item)
         {
             dbContext.ProvidersPrefix
                 .Add(item);
         }
+
         public void Update(ProviderPrefix item)
         {
             dbContext.ProvidersPrefix
                 .Update(item);
         }
+
         public void DeleteById(int id)
         {
             var provider = dbContext.Providers
@@ -56,6 +63,7 @@ namespace Data.Repos
                 dbContext.Providers
                     .Remove(provider);
         }
+
         public void Save()
         {
             dbContext.SaveChanges();

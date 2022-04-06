@@ -6,7 +6,6 @@ namespace Telecom.Extensions
 {
     internal class ServiceNamesMap
     {
-        /* Key = Service type, value = services names and implementation types */
         private readonly Dictionary<Type, Dictionary<string, Type>> serviceNameMap =
             new Dictionary<Type, Dictionary<string, Type>>();
 

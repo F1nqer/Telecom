@@ -12,10 +12,10 @@ namespace Data.Contexts
           {
               optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=Telecom;Trusted_Connection=True;");
           }*/
+
         public TelecomDbContext(DbContextOptions<TelecomDbContext> options)
            : base(options)
         {
-
         }
     }
 }

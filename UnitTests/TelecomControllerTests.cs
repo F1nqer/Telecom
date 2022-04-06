@@ -59,7 +59,6 @@ namespace UnitTests
             //Всё хорошо Bill with Activ Provider is created
             var resultActiv = controller.Payment(paymentActiv, "RU-ru");
 
-
             //Assert
             Assert.Equal("Всё хорошо Bill with Activ Provider is created", resultActiv.Result.ToString());
         }

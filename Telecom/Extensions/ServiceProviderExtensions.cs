@@ -8,7 +8,6 @@ namespace Telecom.Extensions
         public static TService GetService<TService>(this IServiceProvider serviceProvider, string name)
             where TService : class
         {
-
             return serviceProvider.GetServiceNamesMap().Resolve<TService>(serviceProvider, name);
         }
 

@@ -21,6 +21,7 @@ namespace Telecom.Controllers
         private NumberService numberService;
         private readonly IStringLocalizer<SharedResource> sharedResourceLocalizer;
         private readonly ILogger<TelecomController> logger;
+
         public TelecomController
             (IServiceProvider serviceProvider, NumberService numberService,
             IStringLocalizer<SharedResource> sharedResourceLocalizer,
@@ -31,6 +32,7 @@ namespace Telecom.Controllers
             this.sharedResourceLocalizer = sharedResourceLocalizer;
             this.logger = logger;
         }
+
         [HttpPost]
         public async Task<ActionResult> Payment(Payment payment, string culture)
         {
@@ -59,10 +61,10 @@ namespace Telecom.Controllers
                 new CookieOptions { Expires = DateTimeOffset.UtcNow.AddYears(1) });
                 return Ok();
             }
-
             catch (Exception e)
             {
-                throw new Exception(e.Message);
+                logger.LogError(e.Message);
+                return BadRequest(e.Message);
             }
         }
     }

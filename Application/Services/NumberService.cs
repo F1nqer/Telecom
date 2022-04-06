@@ -11,7 +11,7 @@ namespace Application.Services
 {
     public class NumberService
     {
-        UoW db;
+        private UoW db;
         private readonly IStringLocalizer<SharedResource> sharedResourceLocalizer;
         private readonly ILogger<NumberService> logger;
 
@@ -22,7 +22,6 @@ namespace Application.Services
             db = new UoW(dbContext);
             this.sharedResourceLocalizer = sharedResourceLocalizer;
             this.logger = logger;
-
         }
 
         public string DetermineProviderName(string number)
