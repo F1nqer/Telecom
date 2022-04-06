@@ -5,7 +5,6 @@ using Domain.Models;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace Application.Services
@@ -16,7 +15,7 @@ namespace Application.Services
         private readonly IStringLocalizer<SharedResource> sharedResourceLocalizer;
         private readonly ILogger<NumberService> logger;
 
-        public NumberService(TelecomDbContext dbContext, 
+        public NumberService(TelecomDbContext dbContext,
             IStringLocalizer<SharedResource> sharedResourceLocalizer,
             ILogger<NumberService> logger)
         {
@@ -37,7 +36,7 @@ namespace Application.Services
                 string providerName = providerPrefix.Provider.Name;
                 return providerName;
             }
-            catch(NullReferenceException ex)
+            catch (NullReferenceException ex)
             {
                 logger.LogError(sharedResourceLocalizer["PrefixNotFound"].Value, ex);
                 throw new Exception(sharedResourceLocalizer["PrefixNotFound"].Value);

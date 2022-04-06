@@ -1,61 +1,67 @@
-/*using System;
-using Xunit;
-using Moq;
-using Microsoft.Extensions.Localization;
-using Application.Localization;
-using Microsoft.Extensions.Logging;
-using Telecom.Controllers;
+/*using Application.Localization;
 using Application.Services;
 using Application.ViewModels;
-using Telecom.Extensions;
-using System.Threading.Tasks;
+using Data;
+using Data.Contexts;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Globalization;
-using Microsoft.Extensions.Options;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Localization;
+using Microsoft.Extensions.Logging;
+using Moq;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Telecom.Controllers;
+using Telecom.Extensions;
+using Xunit;
 
 namespace UnitTests
 {
-    public class TelecomControllerTests
+    public class TelecomControllerUnitTests
     {
         [Fact]
         public void PaymentTest()
         {
-            //Arrange
-            var mock = new Mock<IStringLocalizer<IProviderService>>();
-            string key = "Hello my dear friend!";
-            var localizedString = new LocalizedString(key, key);
-            mock.Setup(_ => _[key]).Returns(localizedString);
+            //Assets
+            //Db
+            var db = new TelecomDbContext(new DbContextOptionsBuilder<TelecomDbContext>()
+               .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=Telecom;Trusted_Connection=True;").Options);
+            //Localizer
+            var mockLocalizer = new Mock<IStringLocalizer<SharedResource>>();
+            mockLocalizer.Setup(_ => _["PrefixNotFound"]).Returns(new LocalizedString("PrefixNotFound", "По префиксу не найдено провайдеров"));
+            mockLocalizer.Setup(_ => _["IncorrectNumber"]).Returns(new LocalizedString("IncorrectNumber", "Некорректный номер"));
+            mockLocalizer.Setup(_ => _["NullError"]).Returns(new LocalizedString("NullError", "Null прилетел"));
+            mockLocalizer.Setup(_ => _["Ok"]).Returns(new LocalizedString("Ok", "Всё хорошо"))
+            //ServiceProviderMock
+           *//* var mockDi = new Mock<IServiceProvider>();*//*
+            //Logger
+            var loggerTelecom = new LoggerFactory().CreateLogger<TelecomController>();
 
-            var _localizer = mock.Object;
-            var _service = new ActivProviderService(_localizer);
-            *//*            var controller = new TelecomController(mock.Object, mock4.Object, mock1.Object, mock2.Object);
-            *//*
-            //Act
-            var result = controller.Payment(new Payment {Number = "+77071522352", Sum = 1000 }, "RU-ru");
+            var loggerActiv = new LoggerFactory().CreateLogger<ActivProviderService>();
 
-            //Assert
-            Assert.Equal("Всё хорошо Bill with Tele2 Provider is created", result.Result.ToString());
-        }
+            var loggerNumber = new LoggerFactory().CreateLogger<NumberService>();
+            var localizer = mockLocalizer.Object;
 
-        [Fact]
-        public void PaymentLocalizationTest()
-        {
-            //Arrange
+            var numberService = new NumberService(db, localizer, loggerNumber);
 
-            //Act
+            *//*mockDi.Setup(a => a.GetService<IProviderService>("Activ")).Returns(new ActivProviderService(db, localizer, loggerActiv));
+            mockDi.SetReturnsDefault(new ActivProviderService(db, localizer, loggerActiv));*/
+/*            var serviceProvider = mockDi.Object;
+*//*
+            var controller = new TelecomController(serProv, numberService, localizer, loggerTelecom);
 
-            //Assert
-        }
-
-        [Fact]
-        public void SetLanguageTest()
-        {
-            //Arrange
+            Payment paymentActiv = new Payment() { Number = "+77011522352", Sum = 1000 };
 
             //Act
+            //Всё хорошо Bill with Activ Provider is created
+            var resultActiv = controller.Payment(paymentActiv, "RU-ru");
+
 
             //Assert
+            Assert.Equal("Всё хорошо Bill with Activ Provider is created", resultActiv.Result.ToString());
         }
     }
-}
-*/
+}*/

@@ -1,17 +1,11 @@
 ﻿using Application.Localization;
 using Application.Services;
 using Application.ViewModels;
-using Data;
 using Data.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace UnitTests
@@ -33,7 +27,7 @@ namespace UnitTests
             var localizer = mockLocalizer.Object;
 
             var service = new ActivProviderService(db, localizer, logger);
-            Payment paymentOk = new Payment() { Number = "+77011522352", Sum = 1000};
+            Payment paymentOk = new Payment() { Number = "+77011522352", Sum = 1000 };
 
             //Act
             var resultOk = service.AddBalanceAsync(paymentOk).Result;
@@ -42,7 +36,7 @@ namespace UnitTests
             Assert.Equal("Bari zhaksy Bill with Activ Provider is created", resultOk);
         }
 
-        [Fact] 
+        [Fact]
         public void NumberServiceTest()
         {
             //Arrange
@@ -90,7 +84,7 @@ namespace UnitTests
             var resultOk = service.AddBalanceAsync(paymentOk).Result;
 
             //Assert
-            Assert.Equal("Bari zhaksy Bill with Activ Provider is created", resultOk);
+            Assert.Equal("Bari zhaksy Bill with Tele2 Provider is created", resultOk);
         }
 
         [Fact]
@@ -114,7 +108,7 @@ namespace UnitTests
             var resultOk = service.AddBalanceAsync(paymentOk).Result;
 
             //Assert
-            Assert.Equal("Bari zhaksy Bill with Activ Provider is created", resultOk);
+            Assert.Equal("Bari zhaksy Bill with Beeline Provider is created", resultOk);
         }
 
         [Fact]
@@ -139,7 +133,7 @@ namespace UnitTests
             var resultOk = service.AddBalanceAsync(paymentOk).Result;
 
             //Assert
-            Assert.Equal("Bari zhaksy Bill with Activ Provider is created", resultOk);
+            Assert.Equal("Bari zhaksy Bill with Altel Provider is created", resultOk);
         }
     }
 }

@@ -29,7 +29,7 @@ namespace Telecom.Controllers
             this.serviceProvider = serviceProvider;
             this.numberService = numberService;
             this.sharedResourceLocalizer = sharedResourceLocalizer;
-            this.logger = logger;   
+            this.logger = logger;
         }
         [HttpPost]
         public async Task<ActionResult> Payment(Payment payment, string culture)
@@ -43,7 +43,7 @@ namespace Telecom.Controllers
         }
 
         [HttpPost]
-        public IActionResult SetLanguage(string culture)    
+        public IActionResult SetLanguage(string culture)
         {
             if (culture == "")
             {
@@ -51,15 +51,16 @@ namespace Telecom.Controllers
                 return BadRequest(sharedResourceLocalizer["NullError"].Value);
             }
 
-            try {
+            try
+            {
                 Response.Cookies.Append(
                 CookieRequestCultureProvider.DefaultCookieName,
                 CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture)),
-                new CookieOptions {Expires = DateTimeOffset.UtcNow.AddYears(1)});
+                new CookieOptions { Expires = DateTimeOffset.UtcNow.AddYears(1) });
                 return Ok();
             }
 
-            catch(Exception e)
+            catch (Exception e)
             {
                 throw new Exception(e.Message);
             }

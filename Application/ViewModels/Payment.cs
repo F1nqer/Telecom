@@ -1,8 +1,4 @@
-﻿using Application.Localization;
-using Microsoft.Extensions.Localization;
-using System;
-
-namespace Application.ViewModels
+﻿namespace Application.ViewModels
 {
     public class Payment
     {

@@ -15,7 +15,7 @@ namespace Application.Services
         private readonly IStringLocalizer<SharedResource> sharedResourceLocalizer;
         private readonly ILogger<ActivProviderService> logger;
 
-        public ActivProviderService(TelecomDbContext dbContext, 
+        public ActivProviderService(TelecomDbContext dbContext,
             IStringLocalizer<SharedResource> sharedResourceLocalizer,
             ILogger<ActivProviderService> logger)
         {
@@ -26,11 +26,13 @@ namespace Application.Services
         public string AddBalance(Payment payment)
         {
             var provider = db.ProviderPrefixes.GetPrefixByName("Activ").Provider;
-            var bill = new Bill 
-                {Sum = payment.Sum,
+            var bill = new Bill
+            {
+                Sum = payment.Sum,
                 Number = payment.Number,
                 Provider = provider,
-                ProviderId = provider.Id};
+                ProviderId = provider.Id
+            };
             db.Bills.Create(bill);
             db.Save();
             return "Bill with Activ Provider is created";
