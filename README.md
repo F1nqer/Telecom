@@ -1,7 +1,7 @@
 Использованные технологии:
-  Логгирование: Serilog (Для перспектив подключения Kibana), записывает в Telecom/Logs/logs.json
-  Unit-тестирование: xUnit (Самый популярный вариант)
-  Локализация: Встроенная локализация .NET Core, используя общий файл ресурсов Application/Localization/SharedResource.cs
+  - Логгирование: Serilog (Для перспектив подключения Kibana), записывает в Telecom/Logs/logs.json
+  - Unit-тестирование: xUnit (Самый популярный вариант)
+  - Локализация: Встроенная локализация .NET Core, используя общий файл ресурсов Application/Localization/SharedResource.cs
  
 Cтруктура проекта:
   - Domain - основные модели, которые не стоит менять
