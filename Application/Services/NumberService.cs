@@ -42,7 +42,7 @@ namespace Application.Services
             }
         }
 
-        public string ValidateNumber(string Number)
+        public string NumberCorrector(string Number)
         {
             Number = Number
                     .Replace(" ", "").Replace("-", "").Replace("(", "").Replace(")", "");

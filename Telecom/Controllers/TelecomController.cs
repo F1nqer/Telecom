@@ -36,7 +36,7 @@ namespace Telecom.Controllers
         [HttpPost]
         public async Task<ActionResult> Payment(Payment payment, string culture)
         {
-            payment.Number = numberService.ValidateNumber(payment.Number);
+            payment.Number = numberService.NumberCorrector(payment.Number);
             var service = serviceProvider
                 .GetService<IProviderService>
                 (numberService.DetermineProviderName(payment.Number));

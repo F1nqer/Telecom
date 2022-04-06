@@ -55,7 +55,7 @@ namespace UnitTests
             var expectedProvider = "Activ";
 
             //Act
-            var resultValidate = service.ValidateNumber(actual);
+            var resultValidate = service.NumberCorrector(actual);
             var resultDetermine = service.DetermineProviderName(expectedNumber);
 
             //Assert
