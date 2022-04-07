@@ -6,6 +6,7 @@ using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Application.Services
 {
@@ -32,6 +33,23 @@ namespace Application.Services
                 ProviderPrefix providerPrefix = db.ProviderPrefixes
                     .GetAll()
                     .FirstOrDefault(p => p.Prefix == prefix) ?? throw new Exception(sharedResourceLocalizer["PrefixNotFound"].Value);
+                string providerName = providerPrefix.Provider.Name;
+                return providerName;
+            }
+            catch (NullReferenceException ex)
+            {
+                logger.LogError(sharedResourceLocalizer["PrefixNotFound"].Value, ex);
+                throw new Exception(sharedResourceLocalizer["PrefixNotFound"].Value);
+            }
+        }
+
+        public async Task<string> DetermineProviderNameAsync(string number)
+        {
+            int prefix = Convert.ToInt32(number.Substring(2, 3));
+            try
+            {
+                ProviderPrefix providerPrefix = await db.ProviderPrefixes.GetByPrefix(prefix) 
+                    ?? throw new Exception(sharedResourceLocalizer["PrefixNotFound"].Value);
                 string providerName = providerPrefix.Provider.Name;
                 return providerName;
             }

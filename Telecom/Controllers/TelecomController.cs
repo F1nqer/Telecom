@@ -39,7 +39,7 @@ namespace Telecom.Controllers
             payment.Number = numberService.NumberCorrector(payment.Number);
             var service = serviceProvider
                 .GetService<IProviderService>
-                (numberService.DetermineProviderName(payment.Number));
+                (await numberService.DetermineProviderNameAsync(payment.Number));
             string response = await service.AddBalanceAsync(payment);
             return Ok(response);
         }

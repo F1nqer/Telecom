@@ -43,6 +43,13 @@ namespace Data.Repos
                 .FirstOrDefaultAsync(p => p.Provider.Name == name);
         }
 
+        public async Task<ProviderPrefix> GetByPrefix(int prefix)
+        {
+            return await dbContext.ProvidersPrefix
+                .Include(p => p.Provider)
+                .FirstOrDefaultAsync(p => p.Prefix == prefix);
+        }
+
         public void Create(ProviderPrefix item)
         {
             dbContext.ProvidersPrefix
